@@ -28,6 +28,10 @@ public class Paese implements Comparable<Paese>{
 		this.nome = nome;
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	
 	/**
 	 * aggiunge il numero dei morti di un determinato giorno
 	 * @param d la data 
@@ -57,12 +61,30 @@ public class Paese implements Comparable<Paese>{
 			return contagi.get(d);
 		}
 		throw new IllegalArgumentException("Nessun dato trovato per la data richiesta");
-		
-		
+			
+	}
+	
+	public int getNContagi() {
+		Set<Date> date= contagi.keySet();
+		int n=0;
+		for(Date d:date) {
+			n+=contagi.get(d);
+		}
+		return n;
 	}
 	
 	public int compareTo(Paese o) {
 		return this.nome.compareTo(o.nome);
+	}
+	
+	public boolean equals(Object o) {
+		if(o!=null) {
+			if(o.getClass() == getClass()) {
+				Paese p=(Paese)o;
+				return p.nome.equals(nome);
+			}
+		}
+		return false;
 	}
 	
 	public int hashcode() {
