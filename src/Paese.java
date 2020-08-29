@@ -73,6 +73,18 @@ public class Paese implements Comparable<Paese>{
 		return n;
 	}
 	
+	public int getGiorniRegistrati() {
+		return contagi.keySet().size();
+	}
+	
+	public Map<Date,Integer> getMapContagi() {
+		return contagi;
+	}
+	
+	public int getMediaContagi() {
+		return getNContagi()/contagi.keySet().size();
+	}
+	
 	public int compareTo(Paese o) {
 		return this.nome.compareTo(o.nome);
 	}

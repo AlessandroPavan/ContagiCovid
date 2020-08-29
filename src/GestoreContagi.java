@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
@@ -24,7 +26,11 @@ public class GestoreContagi {
 			System.out.println("Scaricato dal sito");
 		}
 		EstrattoreDati d = new EstrattoreDati("dati.xml");
-		System.out.println(d.getPaesi());
+		Set<Paese> paesi =d.getPaesi();
+		Visualizzatore v = new Visualizzatore("Tabella contagi covid");
+		Paese desiderato = trovaPaese(paesi,"italy");
+		v.aggiungiTabellaDaMappa(desiderato.getMapContagi(),desiderato.getGiorniRegistrati() , 2);
+		v.visualizza();
 	}
 	
 	static void writeObject(Object o) {
@@ -55,6 +61,19 @@ public class GestoreContagi {
 		String sD1= sdf.format(d1);
 		String sD2= sdf.format(d2);
 		return sD1.equals(sD2);
+	}
+	
+	static Paese trovaPaese(Set<Paese> p,String cercato) {
+		Paese trovato = null;
+		Iterator<Paese> it= p.iterator();
+		while(it.hasNext()) {
+			Paese pEstratto=it.next();
+			if(pEstratto.getNome().equalsIgnoreCase(cercato)) {
+				trovato=pEstratto;
+				break;
+			}
+		}
+		return trovato;
 	}
 
 }
